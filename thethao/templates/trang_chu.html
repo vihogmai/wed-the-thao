@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Tin Tức Thể Thao Cao Cấp</title>
+    <style>
+        /* --- THIẾT LẬP HỆ THỐNG GIAO DIỆN CHUẨN --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.25s ease; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; line-height: 1.6; }
+        
+        /* 1. Thanh Menu Chính Màu Đỏ Thể Thao */
+        .navbar { background: linear-gradient(135deg, #d90429, #ef233c); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(217, 4, 41, 0.15); }
+        .navbar a { color: white; text-decoration: none; font-weight: 700; letter-spacing: 0.5px; }
+        .navbar-brand { font-size: 26px; text-transform: uppercase; }
+        .nav-right { display: flex; align-items: center; gap: 18px; }
+        
+        /* Các nút bấm bo góc hiện đại */
+        .btn { padding: 8px 16px; border-radius: 6px; font-weight: bold; text-decoration: none; cursor: pointer; border: none; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn-warning { background-color: #ffb703; color: #000 !important; }
+        .btn-warning:hover { background-color: #fb8500; transform: translateY(-2px); }
+        .btn-outline { border: 1.5px solid white; background: transparent; color: white !important; }
+        .btn-outline:hover { background-color: white; color: #d90429 !important; transform: translateY(-2px); }
+        .btn-white { background-color: white; color: #d90429 !important; }
+        .btn-white:hover { background-color: #f1f1f1; transform: translateY(-2px); }
+        .text-white { color: white; font-size: 14px; }
+
+        /* --- 2. THANH MENU ĐIỀU HƯỚNG MÀU XANH ĐẬM SANG TRỌNG --- */
+        .main-menu-bar { background-color: #1a5276; box-shadow: 0 3px 6px rgba(0,0,0,0.08); position: relative; z-index: 10; }
+        .main-menu-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; flex-wrap: wrap; }
+        .main-menu-wrapper a { color: #ffffff; text-decoration: none; font-weight: 600; font-size: 13.5px; padding: 14px 16px; display: inline-block; text-transform: uppercase; letter-spacing: 0.3px; }
+        .main-menu-wrapper a:hover { background-color: #154360; color: #ffb703; }
+        .main-menu-wrapper a.home-icon { font-size: 16px; background-color: #154360; padding: 14px 20px; }
+
+        /* --- 3. THANH ICON MÔN THỂ THAO TỐI GIẢN --- */
+        .team-bar-container { background-color: #ffffff; border-bottom: 1px solid #e9ecef; padding: 12px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .team-bar-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: flex-start; }
+        .team-item { display: flex; align-items: center; text-decoration: none; color: #495057; font-size: 14px; font-weight: 600; padding: 6px 14px; border-radius: 20px; background-color: #f1f3f5; }
+        .team-item:hover { color: white; background-color: #d90429; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(217, 4, 41, 0.2); }
+        .team-item .sport-icon { font-size: 16px; margin-right: 6px; }
+
+        /* --- BỐ CỤC CHIA 2 CỘT TỶ LỆ VÀNG --- */
+        .container { max-width: 1200px; margin: 35px auto; padding: 0 20px; display: flex; gap: 35px; }
+        .col-left { flex: 2.3; } 
+        .col-right { flex: 1; } 
+
+        /* --- TIÊU ĐỀ KHỐI CHUẨN ĐẸP --- */
+        .widget-title { border-left: 5px solid #d90429; padding-left: 12px; margin-bottom: 25px; color: #2b2d42; font-size: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* --- THIẾT KẾ CARD BÀI VIẾT CAO CẤP --- */
+        .card { background: white; padding: 18px; margin-bottom: 25px; border-radius: 12px; display: flex; gap: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.03); overflow: hidden; cursor: pointer; }
+        .card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 12px 20px rgba(0,0,0,0.08); border-color: rgba(217, 4, 41, 0.1); }
+        
+        .card-img-box { flex: 1; max-width: 240px; overflow: hidden; border-radius: 8px; position: relative; }
+        .card-img { width: 100%; height: 150px; object-fit: cover; }
+        .card:hover .card-img { transform: scale(1.06); } /* Zoom nhẹ ảnh khi hover */
+        
+        .card-content { flex: 2; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-title { font-size: 19px; margin-bottom: 10px; color: #2b2d42; line-height: 1.4; }
+        .card:hover .card-title { color: #d90429; } /* Đổi màu chữ tiêu đề */
+        
+        .card-meta { font-size: 12px; color: #8d99ae; margin-bottom: 12px; font-weight: 500; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .card-meta span { display: inline-flex; align-items: center; gap: 4px; }
+        .card-text { color: #4a5568; font-size: 14.5px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* --- THIẾT KẾ CỘT PHẢI CAO CẤP --- */
+        .box-right { background: white; padding: 22px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.03); }
+        
+        /* Tin đọc nhiều có xếp hạng số */
+        .tin-item { padding: 12px 0; border-bottom: 1px solid #edf2f7; display: flex; align-items: flex-start; gap: 12px; }
+        .tin-item:last-child { border-bottom: none; }
+        .tin-counter { background: #f1f3f5; color: #495057; font-weight: 800; font-size: 13px; min-width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 6px; }
+        .tin-item:nth-child(1) .tin-counter { background: #d90429; color: white; }
+        .tin-item:nth-child(2) .tin-counter { background: #ef233c; color: white; }
+        .tin-item:nth-child(3) .tin-counter { background: #ffb703; color: white; }
+        
+        .tin-info { flex: 1; }
+        .tin-info a { text-decoration: none; color: #2b2d42; font-weight: 700; font-size: 14px; line-height: 1.4; display: block; }
+        .tin-info a:hover { color: #d90429; }
+        .tin-views { font-size: 11px; color: #8d99ae; margin-top: 4px; font-weight: 600; }
+
+        /* Bảng điểm chuyên nghiệp */
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 14px; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+        th, td { padding: 12px 10px; text-align: center; }
+        th { background-color: #2b2d42; color: white; font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+        td { border-bottom: 1px solid #edf2f7; color: #4a5568; font-weight: 600; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover td { background-color: #f1f5f9; }
+        .text-danger { color: #d90429; font-weight: 800; font-size: 15px; }
+
+        /* Chân trang */
+        footer { background: #2b2d42; color: #8d99ae; text-align: center; padding: 25px; margin-top: 40px; font-size: 13px; font-weight: 500; border-top: 4px solid #d90429; }
+
+        /* Hỗ trợ Responsive Mobile */
+        @media (max-width: 768px) {
+            .container { flex-direction: column; margin: 15px auto; }
+            .card { flex-direction: column; }
+            .card-img-box { max-width: 100%; }
+            .main-menu-wrapper a { padding: 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a class="navbar-brand" href="/">WEB THỂ THAO</a>
+        <div class="nav-right">
+            <a href="/" style="margin-right: 15px;">Trang chủ</a>
+            
+            {% if user.is_authenticated %}
+                <a class="btn btn-warning" href="/dang-tin/">+ Đăng bài mới</a>
+                <span class="text-white">Chào, <strong>{{ user.username }}</strong></span>
+                <a class="btn btn-outline" href="/dang-xuat/">Đăng xuất</a>
+            {% else %}
+                <a class="btn btn-outline" href="/dang-nhap/">Đăng nhập</a>
+                <a class="btn btn-white" href="/dang-ky/">Đăng ký</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="main-menu-bar">
+        <div class="main-menu-wrapper">
+       <a href="/" class="home-icon">🏠</a>
+           <a href="/?mon=lich_thi_dau">Lịch Thi Đấu</a>
+<a href="/?mon=world_cup_2026">World Cup 2026</a>
+<a href="/?mon=bong_da_viet_nam">Bóng Đá Việt Nam</a>
+<a href="/?mon=bong_da_quoc_te">Bóng Đá Quốc Tế</a>
+<a href="/?mon=nhan_dinh">Nhận Định</a>
+<a href="/?mon=chuyen_nhuong">Chuyển Nhượng</a>
+<a href="/?mon=the_thao">Thể Thao</a>
+<a href="/?mon=bong_chuyen">Bóng Chuyền</a>
+<a href="/?mon=pickleball">Pickleball</a>
+<a href="/?mon=esports">Esports</a>
+    
+        </div>
+    </div>
+
+    <div class="team-bar-container">
+        <div class="team-bar-wrapper">
+            <a href="#" class="team-item"><span class="sport-icon">⚽</span><span>Bóng Đá</span></a>
+            <a href="#" class="team-item"><span class="sport-icon">🏀</span><span>Bóng Rổ</span></a>
+            <a href="#" class="team-item"><span class="sport-icon">🎾</span><span>Tennis</span></a>
+            <a href="#" class="team-item"><span class="sport-icon">🏸</span><span>Cầu Lông</span></a>
+            <a href="#" class="team-item"><span class="sport-icon">🏎️</span><span>Đua Xe F1</span></a>
+            <a href="#" class="team-item"><span class="sport-icon">🥊</span><span>Võ Thuật</span></a>
+            <a href="#" class="team-item"><span class="sport-icon">🎮</span><span>Esports</span></a>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="col-left">
+            <h4 class="widget-title">TIN TỨC MỚI NHẤT</h4>
+            
+            {% if tin_moi %}
+                {% for tin in tin_moi %}
+                <div class="card" onclick="window.location.href='#'">
+                    <div class="card-img-box">
+                        {% if tin.anh_minh_hoa %}
+                            <img src="{{ tin.anh_minh_hoa.url }}" class="card-img" alt="{{ tin.tieu_de }}">
+                        {% else %}
+                            <div style="background:#e9ecef; height:150px; display:flex; align-items:center; justify-content:center; color:#adb5bd; font-weight:bold;">Không có ảnh</div>
+                        {% endif %}
+                    </div>
+                    <div class="card-content">
+                        <h5 class="card-title"><strong>{{ tin.tieu_de }}</strong></h5>
+                        <div class="card-meta">
+                            <span>📅 {{ tin.ngay_dang|date:"d/m/Y H:i" }}</span>
+                            <span>|</span>
+                            <span>👀 {{ tin.luot_xem }} lượt xem</span>
+                            <span>|</span>
+                            <span>✍️ Tác giả: <strong>{% if tin.tac_gia %}{{ tin.tac_gia.username }}{% else %}Ẩn danh{% endif %}</strong></span>
+                        </div>
+                        <p class="card-text">{{ tin.tom_tat }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div style="background: #e1f5fe; padding: 20px; border-radius: 8px; color: #0288d1; font-weight: 600;">Chưa có bài viết nào. Bạn hãy bấm nút "Đăng bài mới" ở trên để bắt đầu nhé!</div>
+            {% endif %}
+        </div>
+
+        <div class="col-right">
+            
+            <div class="box-right">
+                <h5 class="widget-title" style="font-size:16px; margin-bottom: 15px;">ĐỌC NHIỀU NHẤT</h5>
+                {% for tin in tin_doc_nhieu %}
+                <div class="tin-item">
+                    <div class="tin-counter">{{ forloop.counter }}</div>
+                    <div class="tin-info">
+                        <a href="#">{{ tin.tieu_de }}</a>
+                        <div class="tin-views">🔥 {{ tin.luot_xem }} lượt xem</div>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="font-size:13px; color:#999;">Chưa có dữ liệu tin hot</p>
+                {% endfor %}
+            </div>
+
+           def trang_chu(request):
+    tin_moi = BaiViet.objects.all().order_by('-ngay_dang')
+    tin_doc_nhieu = BaiViet.objects.all().order_by('-luot_xem')[:4]
+
+    return render(request, 'trang_chu.html', {
+        'tin_moi': tin_moi,
+        'tin_doc_nhieu': tin_doc_nhieu,
+    })
+                    
+                    </tbody>
+                </table>
+            </div>
+
+        </div> </div>
+
+    <footer>
+        <p>&copy; 2026 - Hệ Thống Trang Mạng Xã Hội Thể Thao Django Đa Nền Tảng</p>
+        <p style="font-size:11px; margin-top: 5px; color: #6c757d;">Phát triển và tối ưu giao diện UI/UX chuyên nghiệp</p>
+    </footer>
+
+</body>
+</html>
