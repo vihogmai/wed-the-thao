@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Cấu hình bảo mật cơ bản
 SECRET_KEY = 'django-insecure-the-thao-key-12345'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Khai báo các ứng dụng (Đã thêm app thethao của bạn)
 INSTALLED_APPS = [
